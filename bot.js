@@ -46,7 +46,7 @@ client.on('message', msg => {
 			var channel = msg.member.voiceChannel;
 			if(channel){
 				if(permissionsFor(msg.client.user).has("CONNECT") && permissionsFor(msg.client.user).has("SPEAK")){
-					var connection = await channel.join();
+					var connection = channel.join();
 					const dispatcher = connection
 						.play("https://www.youtube.com/watch?v=du-TY1GUFGk")
 						.on("finish", () => {
