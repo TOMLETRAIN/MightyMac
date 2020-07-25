@@ -43,7 +43,6 @@ client.on('message', msg => {
 		const dispatcher = connection.playFile('./iiwmd.mp3');
 		dispatcher.on("end", end => {channel.leave()});
 		}).catch(err => console.log(err));
-	
   }
   else if (msg.content.startsWith("non toi") || msg.content.startsWith("Non toi") || msg.content.startsWith("no u") || msg.content.startsWith("No u")){
 	  msg.delete();
