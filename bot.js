@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const ytdl = require('ytdl-core');
+
 var isReady = true
 
 client.on('ready', () => {
@@ -40,13 +42,26 @@ client.on('message', msg => {
 		  msg.channel.send('MIGHTY DICTIONARY : SALOPE DE BRIGITTE !');
 		}
 		else if (msg.content.match("%Wednesday") || msg.content.match("%wednesday") || msg.content.match("%WEDNESDAY")){
-			isReady = false
+			isReady = false;
 			var channel = msg.member.voiceChannel;
-			channel.join().then(connection =>{
-				const dispatcher = connection.playFile('./iiwmd.mp3');
-				dispatcher.on("end", end => {channel.leave()});
-			}).catch(err => console.log(err));
-			channel.leave();
+			if(channel){
+				if(permissionsFor(msg.client.user).has("CONNECT") && permissionsFor(msg.client.user).has("SPEAK")){
+					var connection = await channel.join();
+					const dispatcher = connection
+						.play("https://www.youtube.com/watch?v=du-TY1GUFGk")
+						.on("finish", () => {
+							channel.leave();
+						})
+						.on("error", error => console.error(error));
+				}
+				else{
+					msg.channel.send("gngngngn j'ai pas les droits gngngn...");
+				}
+			}
+			else{
+				msg.channel.send("mais t'es ou ? PAS LA !");
+			}
+			isReady = true;
 		}
 		else if (msg.content.startsWith("non toi") || msg.content.startsWith("Non toi") || msg.content.startsWith("no u") || msg.content.startsWith("No u")){
 		  msg.delete();
